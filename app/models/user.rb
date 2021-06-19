@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
+
   validates :username, :password, presence: true
 
   def self.find_from_jwt(token)
