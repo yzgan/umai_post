@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
     collection do
       get :top
+      get :ip_listing
     end
   end
 end
