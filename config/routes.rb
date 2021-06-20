@@ -5,5 +5,9 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :ratings
+
+    collection do
+      get :top
+    end
   end
 end

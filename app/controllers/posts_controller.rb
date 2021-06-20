@@ -15,6 +15,11 @@ class PostsController < ApplicationController
     end
   end
 
+  def top
+    count = params[:top_count].presence || 10
+    @posts = Post.order(average_rating: :desc).limit(count)
+  end
+
   private
 
   def post_params
