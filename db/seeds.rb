@@ -21,3 +21,8 @@ User.find_each do |user|
     .map { { ip_address: Faker::Internet.ip_v4_address, user_id: user.id, created_at: DateTime.current, updated_at: DateTime.current } }
     .tap { |params| Login.insert_all params }
 end
+
+post_ids = Post.pluck(:id)
+Login.includes(:user).limit(100).find_each do |login|
+  Post.find(post_ids.sample).update_columns(author_ip: login.ip_address, user_id: login.user.id)
+end
