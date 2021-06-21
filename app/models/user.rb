@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def generate_jwt_token
     JWT.encode({ id: id, exp: (DateTime.current + 24.hours).to_i }, Rails.application.secret_key_base, 'HS256')
   end
+
+  def ip_v4_list
+    @ip_v4_list ||= (0..50).map { Faker::Internet.ip_v4_address }
+  end
 end

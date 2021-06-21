@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    render json: @user
+    @pagy, @posts = pagy(Post.all)
   end
 
   def create
@@ -17,7 +17,7 @@ class PostsController < ApplicationController
 
   def top
     count = params[:top_count].presence || 10
-    @posts = Post.order(average_rating: :desc).limit(count)
+    @pagy, @posts = pagy(Post.order(average_rating: :desc).limit(count))
   end
 
   def ip_listing
