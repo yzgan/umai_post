@@ -31,9 +31,11 @@ class PostsController < ApplicationController
   end
 
   def ip_list_from_posts
-    Post
-      .pluck(:author_ip, :user_id)
-      .group_by(&:first)
-      .transform_values { |ip_users| ip_users.map(&:last).map { |user_id| User.find_by(id: user_id)&.username }.compact }
+    Post.with_ip.distinct.pluck(:author_ip).map do |ip_address|
+      [
+        ip_address,
+        Login.find_by(ip_address: ip_address)&.find_user_ip_addresses
+      ]
+    end
   end
 end
