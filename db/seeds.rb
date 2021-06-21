@@ -17,8 +17,7 @@
   .tap { |params| Post.insert_all params }
 
 User.find_each do |user|
-  ip_list = user.ip_v4_list
-  Post.without_user.limit(5).each do |post|
-    post.update_columns(user_id: user.id, author_ip: ip_list.sample)
-  end
+  (0..50)
+    .map { { ip_address: Faker::Internet.ip_v4_address, user_id: user.id, created_at: DateTime.current, updated_at: DateTime.current } }
+    .tap { |params| Login.insert_all params }
 end

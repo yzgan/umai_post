@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :authenticate_user
 
   def login
+    @user.logins.create(ip_address: request.remote_ip)
     render json: @user.generate_jwt_token, status: :ok
   end
 
