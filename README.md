@@ -1,24 +1,67 @@
-# README
+# Setup
+Run db setup to setup database and seeds
+```
+rails db:setup
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# API Endpoint
 
-Things you may want to cover:
+## Get user JWT token
+GET `/login`
+with form body params:
+```json
+{
+  "username": "user_1",
+  "password": "password"
+}
+```
 
-* Ruby version
+will create login and return JWT token in the response response for successful login.
 
-* System dependencies
+## Get post
+Pagination was used for posts collection. 
 
-* Configuration
+GET `/posts`
+with optional params:
+```json
+{
+  "page": 1,
+}
+```
 
-* Database creation
+## Create post
 
-* Database initialization
 
-* How to run the test suite
+Header `Authorization` with jwt token from login will be used to set user id in post. 
 
-* Services (job queues, cache servers, search engines, etc.)
+POST `/posts` with body params:
+```json
+{
+    "post": {
+        "title": "post a",
+        "content": "post content a"
+    }
+}
+```
 
-* Deployment instructions
+## Create post rating
+POST `/posts/{:post_id}/ratings` with body params:
+```json
+{
+    "rating": {
+        "value": 2
+    }
+}
+```
 
-* ...
+## Get top posts
+GET `/posts/top`
+with optional params. default is 10
+```json
+{
+  "top_count": 3,
+}
+```
+
+## Get ip list
+GET `/posts/ip_listing`
