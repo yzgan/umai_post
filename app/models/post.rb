@@ -4,5 +4,6 @@ class Post < ApplicationRecord
 
   scope :without_user, -> { where(user_id: nil) }
   scope :with_user, -> { where.not(user_id: nil) }
+  scope :without_ip, -> { where.not(author_ip: nil) }
   scope :with_ip, -> { where.not(author_ip: nil) }
 end
